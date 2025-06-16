@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   loginMethod: {
     type: String,
-    enum: ['email', 'google','github'],
+    enum: ['email', 'google','github','linkedin'],
     default: 'email'
   },
   googleId: {

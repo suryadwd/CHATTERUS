@@ -1,9 +1,10 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
+import { Strategy as LinkedInStrategy } from 'passport-linkedin-oauth2';
 import dotenv from 'dotenv';
 import {User} from '../models/user.modal.js';
-
+// import { sendWelcomeEmail } from '../utils/email.js';
 dotenv.config();
 
 passport.serializeUser((user, done) => done(null, user.id));
@@ -34,6 +35,7 @@ passport.use(new GoogleStrategy({
         photo: profile.photos[0].value,
          loginMethod: 'google'
       });
+      // if (user.email) sendWelcomeEmail(user.email, user.name);
     }
 
     return done(null, user);
@@ -60,7 +62,9 @@ passport.use(new GitHubStrategy({
         email: profile.emails?.[0]?.value,
         photo: profile.photos?.[0]?.value,
         loginMethod: 'github'
-      }); 
+      })
+      // if (user.email) sendWelcomeEmail(user.email, user.name);
+
     }
 
     return done(null, user);
@@ -89,6 +93,7 @@ passport.use(new LinkedInStrategy({
         photo: profile.photos?.[0]?.value,
         loginMethod: 'linkedin',
       });
+      // sendWelcomeEmail(user.email, user.name);
     }
 
     done(null, user);
@@ -96,7 +101,5 @@ passport.use(new LinkedInStrategy({
     done(err, null);
   }
 }));
-
-
 
 export default passport;

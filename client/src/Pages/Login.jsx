@@ -34,12 +34,18 @@ const Login = () => {
     }
 
     const handelGoogleLogin = () => {
-    window.location.href = 'http://localhost:7000/auth/google';
-  };
+      window.location.href = 'http://localhost:7000/auth/google';
+    };
 
-   const handelGithubLogin = () => {
+    const handelGithubLogin = () => {
       window.location.href = 'http://localhost:7000/auth/github';
     }
+
+    const handelLinkedinLogin = () => {
+      window.location.href = 'http://localhost:7000/auth/linkedin';
+    }
+
+
 
 
   return (
@@ -69,6 +75,11 @@ const Login = () => {
       <button onClick={handleLogin} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
         Login
       </button>
+
+      <div className='text-gray-400 text-sm font-extralight text-center cursor-pointer' onClick={() => navigate('/forget')}>
+        Forget Password?
+      </div>
+
       </div>
       <div className='h-0.5 w-full mt-4 bg-zinc-500 '></div>
       
@@ -87,6 +98,16 @@ const Login = () => {
         <div className="flex items-center justify-center mt-4">
           <img
             src="/github.png"
+            alt="Google logo"
+            className="inline w-7 h-7 m-2 rounded-full"
+          />
+        </div>
+        </button>
+
+        <button onClick={handelLinkedinLogin}>
+        <div className="flex items-center justify-center mt-4">
+          <img
+            src="/p2.png"
             alt="Google logo"
             className="inline w-7 h-7 m-2 rounded-full"
           />

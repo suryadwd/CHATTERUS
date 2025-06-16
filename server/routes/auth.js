@@ -76,7 +76,7 @@ router.get('/github/callback',
 );
 
 // LinkeIn Auth
-router.get('/auth/linkedin',passport.authenticate('linkedin'));
+router.get('/linkedin',passport.authenticate('linkedin'));
 
 // LinkeIn callback
 router.get('/auth/linkedin/callback',

@@ -1,7 +1,7 @@
 import  { User }  from "../models/user.modal.js";
 import bcrypt from "bcrypt";
 import { genTokenSetCookies } from "../utils/token.js";
-import passport from 'passport';
+import { sendWelcomeEmail } from "../utils/email.js";
 
 // working
 // adding the google auth and github auth next part 
@@ -15,10 +15,10 @@ export const register = async (req, res) => {
         .json({ success: false, message: "All fields are required" });
 
     const existingUser = await User.findOne({ email });
-    if (existingUser)
+    if (existingUser){
       return res
         .status(400)
-        .json({ success: false, message: "User already exists" });
+        .json({ success: false, message: "User already exists" });}
 
     const hashpass = await bcrypt.hash(password, 10); 
 
@@ -28,6 +28,8 @@ export const register = async (req, res) => {
     const payload = (user._id);
 
     genTokenSetCookies(payload, res);
+
+    sendWelcomeEmail(user.email, user.name);
 
     return res
       .status(201)

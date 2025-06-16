@@ -6,6 +6,7 @@ import Login from './Pages/Login.jsx';
 import Home from './Pages/Home.jsx';
 import Profile from "./Pages/Profile.jsx";
 import Signup from "./Pages/Signup.jsx";
+import Forgetpass from "./Pages/Forgetpass.jsx";
 const App = () => {
 
   const socket = io("http://localhost:7000");
@@ -32,6 +33,8 @@ const App = () => {
         <Route path="/auth/signup" element={<Signup/>} />
         <Route path="/auth/login" element={<Login/>} />
         <Route path="/profile" element={<Profile/>} />
+        <Route path="/forget" element={<Forgetpass/>} />
+
      </Routes>
    </div>
 
