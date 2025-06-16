@@ -70,32 +70,32 @@ passport.use(new GitHubStrategy({
 }));
 
 
-// passport.use(new GitHubStrategy({
-//   clientID: process.env.GITHUB_CLIENT_ID,
-//   clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//   callbackURL: process.env.GITHUB_CALLBACK_URL,
-//   scope: ['user:email']
-// }, async (accessToken, refreshToken, profile, done) => {
-//   try {
-//     let email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+// Linked authintication
 
-//     let user = await User.findOne({ githubId: profile.id });
+passport.use(new LinkedInStrategy({
+  clientID: process.env.LINKEDIN_CLIENT_ID,
+  clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  callbackURL: process.env.LINKEDIN_CALLBACK_URL,
+  scope: ['r_emailaddress', 'r_liteprofile'],
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    let user = await User.findOne({ linkedinId: profile.id });
 
-//     if (!user) {
-//       user = await User.create({
-//         githubId: profile.id,
-//         name: profile.displayName || profile.username,
-//         email,
-//         photo: profile.photos[0]?.value,
-//         loginMethod: 'github'
-//       });
-//     }
+    if (!user) {
+      user = await User.create({
+        linkedinId: profile.id,
+        name: profile.displayName,
+        email: profile.emails?.[0]?.value,
+        photo: profile.photos?.[0]?.value,
+        loginMethod: 'linkedin',
+      });
+    }
 
-//     return done(null, user);
-//   } catch (err) {
-//     return done(err, null);
-//   }
-// }));
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+}));
 
 
 

@@ -29,6 +29,11 @@ const userSchema = new mongoose.Schema({
   unique: true,
   sparse: true
 },
+  linkedinId: {
+    type: String,
+    unique: true,
+    sparse: true
+  }
 }, { timestamps: true });
 
 export const User = mongoose.model('User', userSchema);

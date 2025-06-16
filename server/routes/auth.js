@@ -75,6 +75,14 @@ router.get('/github/callback',
   })
 );
 
+// LinkeIn Auth
+router.get('/auth/linkedin',passport.authenticate('linkedin'));
 
+// LinkeIn callback
+router.get('/auth/linkedin/callback',
+  passport.authenticate('linkedin', {
+    successRedirect: 'http://localhost:5173/home',
+    failureRedirect: '/failed',
+  }));
 
 export default router;
