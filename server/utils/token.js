@@ -1,9 +1,6 @@
-import { Response } from "express"
 import jwt from "jsonwebtoken"
 
-
-
-export const genTokenSetCookies = async (payload) => {
+export const genTokenSetCookies = async (payload, res) => {
 
   const token = jwt.sign({ id: payload },  process.env.JWT_SECRET , { expiresIn: '5d' });
 

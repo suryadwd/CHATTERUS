@@ -28,8 +28,10 @@ const App = () => {
    <div className="bg-gradient-to-br from-red-800 via-zinc-900 to-blue-900 min-h-screen flex items-center justify-center">
      <Routes>
         <Route path="/" element={<Login/>} />
+        <Route path="/home" element={<Home/>} />
         <Route path="/auth/signup" element={<Signup/>} />
-        <Route path="/auth/profile" element={<Profile/>} />
+        <Route path="/auth/login" element={<Login/>} />
+        <Route path="/profile" element={<Profile/>} />
      </Routes>
    </div>
 

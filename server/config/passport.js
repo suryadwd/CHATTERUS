@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import dotenv from 'dotenv';
-import User from '../models/user.modal.js';
+import {User} from '../models/user.modal.js';
 
 dotenv.config();
 
@@ -28,7 +28,8 @@ passport.use(new GoogleStrategy({
         googleId: profile.id,
         displayName: profile.displayName,
         email: profile.emails[0].value,
-        photo: profile.photos[0].value
+        photo: profile.photos[0].value,
+         loginMethod: 'google'
       });
     }
 

@@ -34,7 +34,7 @@ app.use(session({
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(express.json());
 app.use('/auth', authRoutes);
 
 // Home

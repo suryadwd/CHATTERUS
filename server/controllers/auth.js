@@ -1,4 +1,4 @@
-import { User } from "../models/user.modal.js";
+import  { User }  from "../models/user.modal.js";
 import bcrypt from "bcrypt";
 import { genTokenSetCookies } from "../utils/token.js";
 import passport from 'passport';
@@ -25,7 +25,7 @@ export const register = async (req, res) => {
     const user = await new User({ name, email, password: hashpass }).save();
 
     //middleware to generate token and set cookies
-    const payload = (user._i).toString();
+    const payload = (user._id);
 
     genTokenSetCookies(payload, res);
 
@@ -62,7 +62,7 @@ export const login = async (req, res ) => {
         .json({ success: false, message: "Invalid credentials" });
 
     //middleware to generate token and set cookies
-    const payload = (existingUser._i).toString();
+    const payload = (existingUser._id);
 
     genTokenSetCookies(payload, res);
 
@@ -124,48 +124,7 @@ export const getUserInfo = async (req, res) => {
 }
 
 
-// Google Auth Init
-router.get('/google', passport.authenticate('google', {
-  scope: ['profile', 'email']
-}));
+import { Router } from "express";
 
-// Google Callback
-router.get('/google/callback',
-  passport.authenticate('google', {
-    failureRedirect: '/auth/failed',
-    successRedirect: '/auth/profile'
-  })
-);
+const router = Router();
 
-// Auth Failure
-router.get('/failed', (req, res) => {
-  res.status(401).send("Authentication Failed");
-});
-
-// Auth Success
-router.get('/profile', (req, res) => {
-  if (!req.user) return res.redirect('/auth/google');
-  res.send(`
-    <h2>Welcome, ${req.user.displayName}</h2>
-    <p>Email: ${req.user.email}</p>
-    <img src="${req.user.photos?.[0]?.value}" alt="profile" width="100"/>
-  `);
-  
-  
-});
-
-// Home route (Google login button)
-router.get('/', (req, res) => {
-  res.send('<a href="/auth/google">Login with Google</a>');
-});
-
-// Logout
-router.get('/logout', (req, res, next) => {
-  req.logout(err => {
-    if (err) return next(err);
-    req.session.destroy(() => {
-      res.clearCookie('connect.sid');
-      res.redirect('/auth/');
-    });
-  });
-});

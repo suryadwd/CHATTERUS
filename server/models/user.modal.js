@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   password:{
     type:String
-  }, 
+  },
   loginMethod: {
     type: String,
     enum: ['email', 'google','github'],
@@ -18,13 +18,14 @@ const userSchema = new mongoose.Schema({
   },
   googleId: {
     type: String,
-    required: true,
     unique: true
   },
-  displayName: String,
-  email: String,
-  photo: String
+  displayName: {
+  type: String,
+  },
+  photo: {
+    type: String,
+  },
 }, { timestamps: true });
 
-const User = mongoose.model('User', userSchema);
-export default User;
+export const User = mongoose.model('User', userSchema);
