@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { Strategy as GitHubStrategy } from 'passport-github2';
 import dotenv from 'dotenv';
 import {User} from '../models/user.modal.js';
 
@@ -15,6 +16,8 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
+// Google authintication 
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -26,10 +29,37 @@ passport.use(new GoogleStrategy({
     if (!user) {
       user = await User.create({
         googleId: profile.id,
-        displayName: profile.displayName,
+        name: profile.displayName,
         email: profile.emails[0].value,
         photo: profile.photos[0].value,
          loginMethod: 'google'
+      });
+    }
+
+    return done(null, user);
+  } catch (err) {
+    return done(err, null);
+  }
+}));
+
+
+// Github authintication
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL,
+  scope: ['user:email']
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    let user = await User.findOne({ githubId: profile.id });
+
+    if (!user) {
+      user = await User.create({
+        githubId: profile.id,
+        name: profile.displayName,
+        email: profile.emails?.[0]?.value,
+        photo: profile.photos?.[0]?.value,
+        loginMethod: 'github'
       });
     }
 

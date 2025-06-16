@@ -20,12 +20,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true
   },
-  displayName: {
-  type: String,
-  },
+  // displayName: {
+  // type: String,  // given by google and github 
+  // },
   photo: {
     type: String,
   },
+  githubId: {
+  type: String,
+},
 }, { timestamps: true });
 
 export const User = mongoose.model('User', userSchema);

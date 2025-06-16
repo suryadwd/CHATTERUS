@@ -33,12 +33,12 @@ router.get('/failed', (req, res) => {
 router.get('/profile', (req, res) => {
   if (!req.user) return res.redirect('/auth/google');
 
-  const { _id, email, displayName, photo, loginMethod } = req.user;
+  const { _id, email, name, photo, loginMethod } = req.user;
 
   return res.status(200).json({
     id: _id,
     email,
-    displayName,
+    name,
     photo,
     loginMethod,
   });
