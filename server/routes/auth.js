@@ -31,7 +31,7 @@ router.get('/failed', (req, res) => {
 
 // Auth Success
 router.get('/profile', (req, res) => {
-  if (!req.user) return res.redirect('/auth/google');
+  if (!req.user) return res.redirect('/auth/failed');
 
   const { _id, email, name, photo, loginMethod } = req.user;
 
@@ -40,9 +40,10 @@ router.get('/profile', (req, res) => {
     email,
     name,
     photo,
-    loginMethod,
+    loginMethod
   });
 });
+
 
 
 
@@ -62,6 +63,17 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
+
+// Start GitHub Auth
+router.get('/github', passport.authenticate('github'));
+
+// GitHub Callback
+router.get('/github/callback',
+  passport.authenticate('github', {
+    failureRedirect: '/auth/failed',
+    successRedirect: 'http://localhost:5173/home'
+  })
+);
 
 
 

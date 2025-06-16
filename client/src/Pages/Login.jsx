@@ -37,6 +37,10 @@ const Login = () => {
     window.location.href = 'http://localhost:7000/auth/google';
   };
 
+   const handelGithubLogin = () => {
+      window.location.href = 'http://localhost:7000/auth/github';
+    }
+
 
   return (
     <div className="bg-gradient-to-b from-black to-blue-600 text-white p-8 rounded-lg shadow-lg w-96">
@@ -68,7 +72,8 @@ const Login = () => {
       </div>
       <div className='h-0.5 w-full mt-4 bg-zinc-500 '></div>
       
-      <button onClick={handelGoogleLogin}>
+      <div className='flex  items-center'>
+        <button onClick={handelGoogleLogin}>
         <div className="flex items-center justify-center mt-4">
           <img
             src="/google.png"
@@ -76,7 +81,21 @@ const Login = () => {
             className="inline w-7 h-7 m-2 rounded-full"
           />
         </div>
+        </button>
+
+        <button onClick={handelGithubLogin}>
+        <div className="flex items-center justify-center mt-4">
+          <img
+            src="/github.png"
+            alt="Google logo"
+            className="inline w-7 h-7 m-2 rounded-full"
+          />
+        </div>
       </button>
+
+      </div>
+
+      
       
       
       <div className="mt-4">

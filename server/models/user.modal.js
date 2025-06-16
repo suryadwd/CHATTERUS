@@ -18,16 +18,16 @@ const userSchema = new mongoose.Schema({
   },
   googleId: {
     type: String,
-    unique: true
+    unique: true,
+    sparse: true,
   },
-  // displayName: {
-  // type: String,  // given by google and github 
-  // },
   photo: {
     type: String,
   },
   githubId: {
   type: String,
+  unique: true,
+  sparse: true
 },
 }, { timestamps: true });
 

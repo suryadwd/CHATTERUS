@@ -48,7 +48,7 @@ passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.GITHUB_CALLBACK_URL,
-  scope: ['user:email']
+  scope: [ 'user:email' ]
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ githubId: profile.id });
@@ -56,11 +56,11 @@ passport.use(new GitHubStrategy({
     if (!user) {
       user = await User.create({
         githubId: profile.id,
-        name: profile.displayName,
+        name: profile.displayName || profile.username,
         email: profile.emails?.[0]?.value,
         photo: profile.photos?.[0]?.value,
         loginMethod: 'github'
-      });
+      }); 
     }
 
     return done(null, user);
@@ -68,5 +68,35 @@ passport.use(new GitHubStrategy({
     return done(err, null);
   }
 }));
+
+
+// passport.use(new GitHubStrategy({
+//   clientID: process.env.GITHUB_CLIENT_ID,
+//   clientSecret: process.env.GITHUB_CLIENT_SECRET,
+//   callbackURL: process.env.GITHUB_CALLBACK_URL,
+//   scope: ['user:email']
+// }, async (accessToken, refreshToken, profile, done) => {
+//   try {
+//     let email = profile.emails && profile.emails[0] ? profile.emails[0].value : null;
+
+//     let user = await User.findOne({ githubId: profile.id });
+
+//     if (!user) {
+//       user = await User.create({
+//         githubId: profile.id,
+//         name: profile.displayName || profile.username,
+//         email,
+//         photo: profile.photos[0]?.value,
+//         loginMethod: 'github'
+//       });
+//     }
+
+//     return done(null, user);
+//   } catch (err) {
+//     return done(err, null);
+//   }
+// }));
+
+
 
 export default passport;

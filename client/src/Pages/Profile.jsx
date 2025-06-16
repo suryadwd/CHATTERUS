@@ -4,7 +4,7 @@ import axiosInstance from '../utils/axios.js';
 const Profile = () => {
   const [user, setUser] = useState(null);
 
-  const fetchGoogleData = async () => {
+  const fetchAuthData = async () => {
     const res = await axiosInstance.get("/auth/profile", {
       withCredentials: true
     })
@@ -19,7 +19,7 @@ const Profile = () => {
 
   useEffect(() => {
   
-    fetchGoogleData();
+    fetchAuthData();
 
   }, []);
 
@@ -28,7 +28,7 @@ const Profile = () => {
   return (
    
     <div className="p-10 text-center">
-      <h1 className="text-2xl font-bold mb-2">Welcome bhai {user.displayName}</h1>
+      <h1 className="text-2xl font-bold mb-2">Welcome bhai {user.name}</h1>
     <p>Email: {user.email}</p>
     <p>{user.loginMethod}</p> 
     <img src={user.photo} alt="User" className="mx-auto rounded-full w-32 mt-4" />
