@@ -4,6 +4,8 @@ import {io} from "socket.io-client";
 import { useEffect } from 'react';
 import Login from './Pages/Login.jsx';
 import Home from './Pages/Home.jsx';
+import Profile from "./Pages/Profile.jsx";
+import Signup from "./Pages/Signup.jsx";
 const App = () => {
 
   const socket = io("http://localhost:7000");
@@ -25,8 +27,9 @@ const App = () => {
   return (
    <div className="bg-gradient-to-br from-red-800 via-zinc-900 to-blue-900 min-h-screen flex items-center justify-center">
      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/auth/login" element={<Login/>} />
+        <Route path="/" element={<Login/>} />
+        <Route path="/auth/signup" element={<Signup/>} />
+        <Route path="/auth/profile" element={<Profile/>} />
      </Routes>
    </div>
 

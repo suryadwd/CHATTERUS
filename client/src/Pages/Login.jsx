@@ -33,6 +33,11 @@ const Login = () => {
       }
     }
 
+    const handelGoogleLogin = () => {
+    window.location.href = 'http://localhost:7000/auth/google';
+  };
+
+
   return (
     <div className="bg-gradient-to-b from-black to-blue-600 text-white p-8 rounded-lg shadow-lg w-96">
       <div className="flex flex-col items-center">
@@ -63,7 +68,7 @@ const Login = () => {
       </div>
       <div className='h-0.5 w-full mt-4 bg-zinc-500 '></div>
       
-      <button onClick={() => console.log("clck")}>
+      <button onClick={handelGoogleLogin}>
         <div className="flex items-center justify-center mt-4">
           <img
             src="/google.png"
