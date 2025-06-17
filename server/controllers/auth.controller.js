@@ -1,7 +1,8 @@
 import  { User }  from "../models/user.modal.js";
 import bcrypt from "bcrypt";
 import { genTokenSetCookies } from "../utils/token.js";
-import { sendWelcomeEmail } from "../utils/email.js";
+import { sendEmail } from "../utils/email.js";
+import otpGenerator from 'otp-generator';
 
 // working
 // adding the google auth and github auth next part 
@@ -29,7 +30,7 @@ export const register = async (req, res) => {
 
     genTokenSetCookies(payload, res);
 
-    sendWelcomeEmail(user.email, user.name);
+    sendEmail(user.email, user.name, "Welcome to CHATTERUS",`Hello ${user.name } ,sir Welcome to our platform! We're glad you're here`);
 
     return res
       .status(201)
@@ -125,8 +126,33 @@ export const getUserInfo = async (req, res) => {
   }
 }
 
+export const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
 
-import { Router } from "express";
+    const user = await User.findOne({ email });
 
-const router = Router();
+    if (!user) return res.status(404).json({ success: false, message: "User not found" });
+  
+    const otp = otpGenerator.generate(6, {
+    upperCaseAlphabets: false,
+    specialChars: false,
+    lowerCaseAlphabets: false
+    });
+
+    user.resetPassOTP= otp;
+    user.resetPassOTPExpires = new Date(Date.now() + 10 * 60 * 1000)
+    await user.save();
+
+    sendEmail(user.email, user.name, "Password Reset OTP valid for 10 minutes",`Hello ${user.name}, Your Password Reset OTP is ${otp} `);
+
+    return res.status(200).json({ message: 'OTP sent to email' });
+
+  } catch (error) {
+    console.log("error in forgetPassword controller", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
+
 

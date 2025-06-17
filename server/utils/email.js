@@ -9,14 +9,14 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-export const sendWelcomeEmail = async (email, name) => {
+export const sendEmail = async (email, name, subject, text) => {
 
 
   const data = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: 'Welcome in Chatter',
-    text: `Hello ${name },sir Welcome to our platform! We're glad you're here`
+    subject: subject,
+    text: text
   };
 
   try {

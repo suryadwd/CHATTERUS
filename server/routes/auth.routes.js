@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { getUserInfo, login, logout, register } from '../controllers/auth.js';
+import { getUserInfo, login, logout, register } from '../controllers/auth.controller.js';
 import { protectRoute } from '../utils/middleware.js';
 import passport from 'passport';
-import { User } from '../models/user.modal.js';
 
 const router = Router();
 
@@ -11,6 +10,8 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/user", protectRoute, getUserInfo);
+
+
 // Google Auth Init
 router.get('/google', passport.authenticate('google', {
   scope: ['profile', 'email']
@@ -45,12 +46,6 @@ router.get('/profile', (req, res) => {
 });
 
 
-
-
-// Home route (Google login button)
-router.get('/', (req, res) => {
-  res.send('<a href="/auth/google">Login with Google</a>');
-});
 
 // Logout
 router.get('/logout', (req, res, next) => {

@@ -28,12 +28,22 @@ const userSchema = new mongoose.Schema({
   type: String,
   unique: true,
   sparse: true
-},
+  },
   linkedinId: {
     type: String,
     unique: true,
     sparse: true
+  },
+  resetPassOTP: {
+    type: String
+  },
+  resetPassOTPExpires: {
+  type: Date,
+  default: Date.now,
+  expires: 300
   }
+
+
 }, { timestamps: true });
 
 export const User = mongoose.model('User', userSchema);

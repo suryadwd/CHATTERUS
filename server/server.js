@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import session from "express-session";
 import passport from "./config/passport.js";
-import authRoutes from "./routes/auth.js";
+import authRoutes from "./routes/auth.routes.js";
 import { connectDb } from "./config/clouddb.js";
 import cors from "cors";
 import { Server } from "socket.io";
