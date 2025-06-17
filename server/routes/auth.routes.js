@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getUserInfo, login, logout, register } from '../controllers/auth.controller.js';
+import { forgetPassword, getUserInfo, login, logout, register, resetPassword } from '../controllers/auth.controller.js';
 import { protectRoute } from '../utils/middleware.js';
 import passport from 'passport';
 
@@ -10,7 +10,8 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
 router.get("/user", protectRoute, getUserInfo);
-
+router.post("/forgetpassword", protectRoute, forgetPassword);
+router.post("/resetpassword", protectRoute, resetPassword);
 
 // Google Auth Init
 router.get('/google', passport.authenticate('google', {

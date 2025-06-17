@@ -38,10 +38,9 @@ const userSchema = new mongoose.Schema({
     type: String
   },
   resetPassOTPExpires: {
-  type: Date,
-  default: Date.now,
-  expires: 300
-  }
+  type: Date
+}
+
 
 
 }, { timestamps: true });
