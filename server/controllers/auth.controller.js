@@ -62,7 +62,7 @@ export const login = async (req, res ) => {
     if (!isMatch)
       return res
         .status(400)
-        .json({ success: false, message: "Invalid credentials" });
+        .json({ success: false, message: "Invalid Password" });
 
     //middleware to generate token and set cookies
     const payload = (existingUser._id);
@@ -128,6 +128,7 @@ export const getUserInfo = async (req, res) => {
 
 export const forgetPassword = async (req, res) => {
   try {
+
     const { email } = req.body;
 
     const user = await User.findOne({ email });
@@ -143,10 +144,11 @@ export const forgetPassword = async (req, res) => {
     user.resetPassOTP= otp;
     user.resetPassOTPExpires = new Date(Date.now() + 10 * 60 * 1000)
     await user.save();
+    const resetLink = `http://localhost:5173/reset?email=${email}`;
 
-    sendEmail(user.email, user.name, "Password Reset OTP valid for 10 minutes",`Hello ${user.name}, Your Password Reset OTP is ${otp} `);
+    sendEmail(user.email, user.name, "Password Reset OTP valid for 10 minutes",`Hello ${user.name}, Your Password Reset OTP is ${otp}. Link to reset your password is ${resetLink}`);
 
-    return res.status(200).json({ message: 'OTP sent to email' });
+    return res.status(200).json({ success: true, message: 'OTP sent to email' });
 
   } catch (error) {
     console.log("error in forgetPassword controller", error);
@@ -156,6 +158,7 @@ export const forgetPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   try {
+
     const { email, otp, newPassword, confirmPassword } = req.body;
 
     if(newPassword !== confirmPassword) return res.status(400).json({ success: false, message: "Passwords do not match" });

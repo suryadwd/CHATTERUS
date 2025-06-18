@@ -39,7 +39,19 @@ const userSchema = new mongoose.Schema({
   },
   resetPassOTPExpires: {
   type: Date
-}
+  },
+  bio:{
+    type: String,
+    default:""
+  },
+  profilePic: {
+    type: String,
+    default:""
+  },
+  canLaunch:{
+    type: Boolean,
+    default: false
+  }
 
 
 

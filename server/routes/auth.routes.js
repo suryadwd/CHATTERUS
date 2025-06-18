@@ -9,9 +9,9 @@ const router = Router();
 router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", logout);
-router.get("/user", protectRoute, getUserInfo);
-router.post("/forgetpassword", protectRoute, forgetPassword);
-router.post("/resetpassword", protectRoute, resetPassword);
+router.get("/user",  getUserInfo);
+router.post("/forgetpassword",  forgetPassword);
+router.post("/resetpassword",  resetPassword);
 
 // Google Auth Init
 router.get('/google', passport.authenticate('google', {
