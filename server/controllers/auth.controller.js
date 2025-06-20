@@ -23,7 +23,10 @@ export const register = async (req, res) => {
 
     const hashpass = await bcrypt.hash(password, 10); 
 
-    const user = await new User({ name, email, password: hashpass }).save();
+    const idx = Math.floor(Math.random() * 100);
+    const randomAvatar = `https://avatar.iran.liara.run/public/${idx}.png`;
+
+    const user = await new User({ name, email, password: hashpass, photo: randomAvatar }).save();
 
     //middleware to generate token and set cookies
     const payload = (user._id);

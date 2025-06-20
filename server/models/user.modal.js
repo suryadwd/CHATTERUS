@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
   },
   photo: {
     type: String,
+    default:""
   },
   githubId: {
   type: String,
@@ -44,16 +45,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     default:""
   },
-  profilePic: {
-    type: String,
-    default:""
-  },
   canLaunch:{
     type: Boolean,
     default: false
+  },
+  friends:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
   }
-
-
 
 }, { timestamps: true });
 

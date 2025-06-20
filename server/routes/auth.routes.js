@@ -46,8 +46,6 @@ router.get('/profile', (req, res) => {
   });
 });
 
-
-
 // Logout
 router.get('/logout', (req, res, next) => {
   req.logout(err => {
